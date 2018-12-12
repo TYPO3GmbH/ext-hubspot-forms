@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 /*
- * This file is part of the package t3g/querybuilder.
+ * This file is part of the package t3g/hubspot_forms.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -26,7 +26,7 @@ class ConverterService
      */
     public function convertToHubspotFormat(array $formData): array
     {
-        $hubspotData = [];
+        $hubspotData = [[]];
         foreach ($formData as $datum) {
             $parts = [];
             if (isset($datum['hubspotTable'], $datum['hubspotProperty'], $datum['value'])) {
@@ -45,9 +45,10 @@ class ConverterService
                         'property' => $hubspotProperty,
                     ];
                 }
-                $hubspotData = array_merge_recursive($hubspotData, $parts);
+                $hubspotData[] = $parts;
             }
         }
+        $hubspotData = array_merge_recursive(...$hubspotData);
         $hubspotData = self::normalizeKeys($hubspotData);
         return $hubspotData;
     }
@@ -95,7 +96,7 @@ class ConverterService
      * @param array $input
      * @return array
      */
-    protected static function normalizeKeys(array $input)
+    protected static function normalizeKeys(array $input): array
     {
         $return = [];
         $len = strlen(self::STRINGIFY);
