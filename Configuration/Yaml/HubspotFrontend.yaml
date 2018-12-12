@@ -1,0 +1,11 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        hubspot:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          finishersDefinition:
+            Hubspot:
+              implementationClassName: 'T3G\HubspotForms\Finishers\HubspotFinisher'
