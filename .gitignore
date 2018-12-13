@@ -5,7 +5,6 @@
 .DS_Store
 
 # Composer
-public/
 vendor/
 bin/
 logs/
