@@ -110,7 +110,7 @@ TYPO3:
                   hubspotProperty: ''
                   hubspotTable: ''
               editors:
-                25:
+                250:
                   identifier: 'hubspotProperty'
                   templateName: 'Inspector-TextEditor'
                   label: 'Hubspot Property Name'
