@@ -26,7 +26,7 @@ function runComposer() {
         --name ${BAMBOO_COMPOSE_PROJECT_NAME}sib_adhoc \
         --rm \
         typo3gmbh/${TEST_PHP_VERSION}:latest \
-        bin/bash -c "cd ${PWD}; composer $*"
+        bin/bash -c "cd ${PWD}; rm composer.lock; composer $*"
 }
 
 function runPhpCsFixer() {
