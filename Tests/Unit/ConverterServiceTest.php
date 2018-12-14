@@ -19,7 +19,7 @@ class ConverterServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function converterTestSampleEltsStructure(): void
+    public function converterTestSampleEltsStructure()
     {
         $formData = [
             0 =>
