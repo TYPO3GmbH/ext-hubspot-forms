@@ -1,8 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace T3G\HubspotForms\Model;
+/*
+ * This file is part of the package t3g/hubspot_forms.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
+namespace T3G\HubspotForms\Model;
 
 use T3G\HubspotForms\Exceptions\InvalidConfigurationException;
 
@@ -21,7 +27,7 @@ class Configuration
         }
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'] ?? false) {
             $this->humweeeKey = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'];
-        } else if (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY')) {
+        } elseif (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY')) {
             $this->humweeeKey = (string)getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY');
         }
         $this->httpOptions = $this->configureHttpOptions();
@@ -79,6 +85,4 @@ class Configuration
             );
         }
     }
-
-
 }

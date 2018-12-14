@@ -1,8 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace T3G\HubspotForms\Tests\Unit;
+/*
+ * This file is part of the package t3g/hubspot_forms.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
+namespace T3G\HubspotForms\Tests\Unit;
 
 use T3G\HubspotForms\Exceptions\InvalidConfigurationException;
 use T3G\HubspotForms\Model\Configuration;
