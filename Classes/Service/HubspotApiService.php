@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use T3G\HubspotForms\Model\Configuration;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -38,13 +39,16 @@ class HubspotApiService
      */
     protected $logger;
 
+    /**
+     * @var string
+     */
+    protected $humweeeKey = '';
+
     public function __construct(LoggerInterface $logger = null)
     {
-        $httpOptions = $GLOBALS['TYPO3_CONF_VARS']['HTTP'];
-        $httpOptions['verify'] = filter_var($httpOptions['verify'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $httpOptions['verify'];
-        $httpOptions['base_uri'] = getenv('APP_HUBSPOT_MIDDLEWARE_BASEURL');
-        $httpOptions['http_errors'] = true;
-        $this->client = new Client($httpOptions);
+        $config = GeneralUtility::makeInstance(Configuration::class);
+        $this->humweeeKey = $config->getHumweeeKey();
+        $this->client = new Client($config->getHttpOptions());
         $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
@@ -55,7 +59,7 @@ class HubspotApiService
     public function genericFormData(array $batchData): ?ResponseInterface
     {
         $requestParams = [
-            'humweeekey' => getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY'),
+            'humweeekey' => $this->humweeeKey,
         ];
 
         try {
