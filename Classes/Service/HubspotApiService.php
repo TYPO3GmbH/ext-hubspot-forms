@@ -56,7 +56,7 @@ class HubspotApiService
      * @param array $batchData
      * @return null|ResponseInterface
      */
-    public function genericFormData(array $batchData): ?ResponseInterface
+    public function genericFormData(array $batchData)
     {
         $requestParams = [
             'humweeekey' => $this->humweeeKey,

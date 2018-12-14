@@ -44,7 +44,7 @@ class HubspotFinisher extends AbstractFinisher implements LoggerAwareInterface
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\ClientException
      */
-    protected function executeInternal(): void
+    protected function executeInternal()
     {
         $formRuntime = $this->finisherContext->getFormRuntime();
 
@@ -92,7 +92,7 @@ class HubspotFinisher extends AbstractFinisher implements LoggerAwareInterface
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\ClientException
      */
-    protected function submitData(array $data): ?ResponseInterface
+    protected function submitData(array $data)
     {
         return GeneralUtility::makeInstance(HubspotApiService::class)
             ->genericFormData((new ConverterService())->convertToHubspotFormat($data));

@@ -15,7 +15,7 @@ namespace T3G\HubspotForms\Service;
  */
 class ConverterService
 {
-    private const STRINGIFY = 'stringify-';
+    const STRINGIFY = 'stringify-';
 
     /**
      * Converts EXT:form structure to hubspot endpoint format
