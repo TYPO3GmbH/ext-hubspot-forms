@@ -1,0 +1,13 @@
+.gitignore export-ignore
+.gitattributes export-ignore
+Build export-ignore
+Tests export-ignore
+
+*.php text eol=lf
+*.twig text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+*.sh text eol=lf
+*.bat text eol=crlf
+**/bin/** text eol=lf
