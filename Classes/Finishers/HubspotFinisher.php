@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace T3G\HubspotForms\Finishers;
 
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use T3G\HubspotForms\Service\ConverterService;

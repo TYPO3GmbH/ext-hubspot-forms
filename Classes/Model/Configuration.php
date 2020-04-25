@@ -70,7 +70,7 @@ class Configuration
         return $httpOptions;
     }
 
-    private function validateConfiguration()
+    private function validateConfiguration(): void
     {
         if (empty($this->humweeeKey)) {
             throw new InvalidConfigurationException(
