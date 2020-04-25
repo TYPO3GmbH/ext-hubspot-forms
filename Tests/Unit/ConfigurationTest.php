@@ -20,7 +20,7 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationConstructorThrowsExceptionOnMissingHumweeekey()
+    public function configurationConstructorThrowsExceptionOnMissingHumweeekey(): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = 'https://base.url';
         $this->expectException(InvalidConfigurationException::class);
@@ -31,7 +31,7 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationConstructorThrowsExceptionOnMissingBaseUrl()
+    public function configurationConstructorThrowsExceptionOnMissingBaseUrl(): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'] = 'somekey';
         $this->expectException(InvalidConfigurationException::class);
@@ -42,7 +42,7 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationConstructorSetsConfigFromGlobals()
+    public function configurationConstructorSetsConfigFromGlobals(): void
     {
         $key = 'somekey';
         $base = 'https://base.url';
@@ -62,7 +62,7 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationConstructorSetsConfigFromEnvVars()
+    public function configurationConstructorSetsConfigFromEnvVars(): void
     {
         $key = 'somekey';
         $base = 'https://base.url';
@@ -83,7 +83,7 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationSetsBaseHttpOptions()
+    public function configurationSetsBaseHttpOptions(): void
     {
         // base setup to avoid errors
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'] = 'somekey';
@@ -151,7 +151,7 @@ class ConfigurationTest extends UnitTestCase
      * @test
      * @dataProvider httpVerifyDataProvider
      */
-    public function configurationSetsHttpOptionVerifyToBool($input, $expected)
+    public function configurationSetsHttpOptionVerifyToBool($input, $expected): void
     {
         // base setup to avoid errors
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'] = 'somekey';
