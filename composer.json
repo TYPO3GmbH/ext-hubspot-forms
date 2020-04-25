@@ -1,6 +1,6 @@
 {
     "name": "t3g/hubspot-forms",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Use EXT:form to create forms storing data in Hubspot",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
