@@ -20,11 +20,24 @@ class ConfigurationTest extends UnitTestCase
     /**
      * @test
      */
-    public function configurationConstructorThrowsExceptionOnMissingHumweeeToken(): void
+    public function configurationConstructorThrowsExceptionOnMissingHumweeeUser(): void
     {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] = 'sometoken';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = 'https://base.url';
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionCode(1544715216);
+        $this->expectExceptionCode(1588754250);
+        new Configuration();
+    }
+
+    /**
+     * @test
+     */
+    public function configurationConstructorThrowsExceptionOnMissingHumweeeToken(): void
+    {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] = 'someuser';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = 'https://base.url';
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionCode(1588754255);
         new Configuration();
     }
 
@@ -33,6 +46,7 @@ class ConfigurationTest extends UnitTestCase
      */
     public function configurationConstructorThrowsExceptionOnMissingBaseUrl(): void
     {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] = 'someuser';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] = 'sometoken';
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionCode(1544715217);
@@ -44,17 +58,20 @@ class ConfigurationTest extends UnitTestCase
      */
     public function configurationConstructorSetsConfigFromGlobals(): void
     {
+        $user = 'someuser';
         $token = 'sometoken';
         $base = 'https://base.url';
         $httpOptions = [
             'verify' => true,
         ];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] = $user;
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] = $token;
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = $base;
         $GLOBALS['TYPO3_CONF_VARS']['HTTP'] = $httpOptions;
 
         $config = new Configuration();
 
+        self::assertSame($user, $config->getHumweeeUser());
         self::assertSame($token, $config->getHumweeeToken());
         self::assertSame($base, $config->getBaseUrl());
         self::assertSame($httpOptions['verify'], $config->getHttpOptions()['verify']);
@@ -64,6 +81,7 @@ class ConfigurationTest extends UnitTestCase
      */
     public function configurationConstructorSetsConfigFromEnvVars(): void
     {
+        $user = 'someuser';
         $token = 'sometoken';
         $base = 'https://base.url';
         $httpOptions = [
@@ -71,10 +89,12 @@ class ConfigurationTest extends UnitTestCase
         ];
         $GLOBALS['TYPO3_CONF_VARS']['HTTP'] = $httpOptions;
         putenv('APP_HUBSPOT_MIDDLEWARE_BASEURL=' . $base);
+        putenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_USER=' . $user);
         putenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_TOKEN=' . $token);
 
         $config = new Configuration();
 
+        self::assertSame($user, $config->getHumweeeUser());
         self::assertSame($token, $config->getHumweeeToken());
         self::assertSame($base, $config->getBaseUrl());
         self::assertSame($httpOptions['verify'], $config->getHttpOptions()['verify']);
@@ -86,6 +106,7 @@ class ConfigurationTest extends UnitTestCase
     public function configurationSetsBaseHttpOptions(): void
     {
         // base setup to avoid errors
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] = 'someuser';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] = 'sometoken';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = 'https://base.url';
 
@@ -154,6 +175,7 @@ class ConfigurationTest extends UnitTestCase
     public function configurationSetsHttpOptionVerifyToBool($input, $expected): void
     {
         // base setup to avoid errors
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] = 'someuser';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] = 'sometoken';
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['baseUrl'] = 'https://base.url';
         $GLOBALS['TYPO3_CONF_VARS']['HTTP'] = [
