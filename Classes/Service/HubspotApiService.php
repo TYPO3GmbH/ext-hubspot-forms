@@ -40,15 +40,23 @@ class HubspotApiService
     protected $logger;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $humweeeKey = '';
+    private $defaultRequestHeaders;
 
     public function __construct(LoggerInterface $logger = null)
     {
         $config = GeneralUtility::makeInstance(Configuration::class);
-        $this->humweeeKey = $config->getHumweeeKey();
         $this->client = new Client($config->getHttpOptions());
+        $this->defaultRequestHeaders = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Basic ' . base64_encode($config->getHumweeeUser() . ':' . $config->getHumweeeToken()),
+        ];
+
+        if (!empty($referer = $config->getHumweeeReferer())) {
+            $this->defaultRequestHeaders['Referer'] = $referer;
+        }
+
         $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
@@ -58,12 +66,8 @@ class HubspotApiService
      */
     public function genericFormData(array $batchData)
     {
-        $requestParams = [
-            'humweeekey' => $this->humweeeKey,
-        ];
-
         try {
-            return $this->client->post('/api/genericFormData?' . http_build_query($requestParams), ['json' => $batchData]);
+            return $this->client->post('/api/genericFormData', ['headers' => $this->defaultRequestHeaders, 'json' => $batchData]);
         } catch (ClientException $exception) {
             $this->logger->error($exception->getMessage());
             if (strpos($exception->getMessage(), '401 Unauthorized') === false) {
