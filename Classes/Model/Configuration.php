@@ -16,7 +16,9 @@ class Configuration
 {
     private $httpOptions;
     private $baseUrl = '';
-    private $humweeeKey = '';
+    private $humweeeUser = '';
+    private $humweeeToken = '';
+    private $humweeeReferer = '';
 
     public function __construct()
     {
@@ -25,10 +27,20 @@ class Configuration
         } else {
             $this->baseUrl = (string)getenv('APP_HUBSPOT_MIDDLEWARE_BASEURL');
         }
-        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'] ?? false) {
-            $this->humweeeKey = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeekey'];
-        } elseif (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY')) {
-            $this->humweeeKey = (string)getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY');
+        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'] ?? false) {
+            $this->humweeeUser = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeUser'];
+        } elseif (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_USER')) {
+            $this->humweeeUser = (string)getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_USER');
+        }
+        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'] ?? false) {
+            $this->humweeeToken = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeToken'];
+        } elseif (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_TOKEN')) {
+            $this->humweeeToken = (string)getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_TOKEN');
+        }
+        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeReferer'] ?? false) {
+            $this->humweeeReferer = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['hubspot_forms']['humweeeReferer'];
+        } elseif (getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_REFERER')) {
+            $this->humweeeReferer = (string)getenv('APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_REFERER');
         }
         $this->httpOptions = $this->configureHttpOptions();
         $this->validateConfiguration();
@@ -53,9 +65,25 @@ class Configuration
     /**
      * @return string
      */
-    public function getHumweeeKey(): string
+    public function getHumweeeUser(): string
     {
-        return $this->humweeeKey;
+        return $this->humweeeUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHumweeeToken(): string
+    {
+        return $this->humweeeToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHumweeeReferer(): string
+    {
+        return $this->humweeeReferer;
     }
 
     /**
@@ -72,10 +100,16 @@ class Configuration
 
     private function validateConfiguration(): void
     {
-        if (empty($this->humweeeKey)) {
+        if (empty($this->humweeeUser)) {
             throw new InvalidConfigurationException(
-                'Missing humweeekey. Configure via $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTENSIONS\'][\'hubspot_forms\'][\'humweeekey\'] or as env var \'APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_KEY\'',
-                1544715216
+                'Missing humweee user. Configure via $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTENSIONS\'][\'hubspot_forms\'][\'humweeeUser\'] or as env var \'APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_USER\'',
+                1588754250
+            );
+        }
+        if (empty($this->humweeeToken)) {
+            throw new InvalidConfigurationException(
+                'Missing humweee token. Configure via $GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTENSIONS\'][\'hubspot_forms\'][\'humweeeToken\'] or as env var \'APP_HUBSPOT_FORM_FRAMEWORK_HUMWEEE_TOKEN\'',
+                1588754255
             );
         }
         if (empty($this->baseUrl)) {
