@@ -45,7 +45,7 @@
         "php": "^7.2",
         "psr/http-message": "^1.0",
         "psr/log": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^6.3 || ^7.2",
         "typo3/cms-core": "^8.7 || ^9.5 || ^10.4 || 11.2.x-dev",
         "typo3/cms-fluid": "^8.7 || ^9.5 || ^10.4 || 11.2.x-dev",
         "typo3/cms-form": "^8.7 || ^9.5 || ^10.4 || 11.2.x-dev",
