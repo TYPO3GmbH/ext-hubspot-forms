@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace T3G\HubspotForms\Model;
 
+use GuzzleHttp\HandlerStack;
 use T3G\HubspotForms\Exceptions\InvalidConfigurationException;
 
 class Configuration
@@ -67,6 +68,15 @@ class Configuration
         $httpOptions['verify'] = filter_var($httpOptions['verify'] ?? true, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
         $httpOptions['base_uri'] = $this->baseUrl;
         $httpOptions['http_errors'] = true;
+
+        if (isset($httpOptions['handler']) && is_array($httpOptions['handler'])) {
+            $stack = HandlerStack::create();
+            foreach ($httpOptions['handler'] ?? [] as $handler) {
+                $stack->push($handler);
+            }
+            $httpOptions['handler'] = $stack;
+        }
+
         return $httpOptions;
     }
 
