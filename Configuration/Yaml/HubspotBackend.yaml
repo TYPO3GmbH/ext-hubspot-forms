@@ -39,8 +39,6 @@ TYPO3:
                     1000:
                       identifier: 'Hubspot'
                       editors:
-                        __inheritances:
-                          10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
                         100:
                           label: 'Hubspot'
             Text:
